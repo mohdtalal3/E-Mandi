@@ -25,6 +25,7 @@ def init_db():
                   video BLOB,
                   image BLOB,
                   date DATE,
+                  type TEXT,
                   FOREIGN KEY (user_id) REFERENCES users(id),
                   FOREIGN KEY (grocery_id) REFERENCES groceries(id))''')
     conn.commit()
@@ -94,34 +95,11 @@ def show(grocery_type):
     # Add the CSS styles
     st.markdown(grocery_item_style, unsafe_allow_html=True)
     st.markdown(search_bar_style, unsafe_allow_html=True)
-    # Add new grocery button (more visually appealing)
-    st.markdown("""
-    <style>
-    .add-new-button {
-        background-color: #4CAF50;
-        border: none;
-        color: white;
-        padding: 15px 32px;
-        text-align: center;
-        text-decoration: none;
-        display: inline-block;
-        font-size: 16px;
-        margin: 4px 2px;
-        cursor: pointer;
-        border-radius: 12px;
-        transition: background-color 0.3s;
-    }
-    .add-new-button:hover {
-        background-color: #45a049;
-    }
-    </style>
-    """, unsafe_allow_html=True)
 
-    if st.markdown('<button class="add-new-button">➕ Add New</button>', unsafe_allow_html=True):
-        st.session_state['adding_grocery'] = True
-
-    if 'adding_grocery' in st.session_state and st.session_state['adding_grocery']:
-        with st.form("add_grocery_form"):
+    # Add new grocery using expander
+    add_grocery_expander = st.expander("➕ Add New Grocery", expanded=False)
+    with add_grocery_expander:
+        with st.form(f"add_grocery_form", clear_on_submit=True, border=True):
             name = st.text_input("Name")
             season = st.selectbox("Season", ["Spring", "Summer", "Autumn", "Winter"])
             picture = st.file_uploader("Upload Picture", type=["jpg", "png", "jpeg"])
@@ -130,7 +108,7 @@ def show(grocery_type):
                 picture_bytes = picture.getvalue()
                 add_grocery(name, grocery_type, season, picture_bytes)
                 st.success("Grocery added successfully!")
-                st.session_state['adding_grocery'] = False
+                add_grocery_expander.expanded = False
                 st.rerun()
 
     # Filter and search
@@ -158,10 +136,12 @@ def show(grocery_type):
             </div>
             """, unsafe_allow_html=True)
             
-            with st.expander("Add Daily Entry"):
-                with st.form(f"daily_entry_{grocery[0]}"):
+            daily_entry_expander = st.expander(f"Add Daily Entry for {grocery[1]}", expanded=False)
+            with daily_entry_expander:
+                with st.form(f"daily_entry_{grocery[0]}", clear_on_submit=True, border=True):
                     subtype = st.text_input("Subtype (e.g., type of grape)")
                     quality = st.selectbox("Quality", ["A", "B", "C"])
+                    type = st.selectbox("Type", ["Distributor","Mandi Wala"])
                     price = st.number_input("Price", min_value=0.0, step=0.1)
                     video = st.file_uploader("Upload Video", type=["mp4", "mov"])
                     image = st.file_uploader("Upload Image", type=["jpg", "png", "jpeg"])
@@ -171,9 +151,10 @@ def show(grocery_type):
                         user_id = st.session_state['user'][0]  # Assuming user ID is stored in session state
                         video_bytes = video.read() if video else None
                         image_bytes = image.read() if image else None
-                        add_daily_entry(user_id, grocery[0], subtype, quality, price, video_bytes, image_bytes, date)
+                        add_daily_entry(user_id, grocery[0], subtype, quality, price, video_bytes, image_bytes, date,type)
                         st.success("Daily entry added successfully!")
-                        st.rerun()  # This will refresh the page, closing the form and allowing for new entries
+                        daily_entry_expander.expanded = False
+                        #st.rerun()  # This will refresh the page, closing the form and allowing for new entries
 
     if st.button("Back to Dashboard"):
         st.session_state['show_grocery'] = False

@@ -17,7 +17,7 @@ def get_current_season():
 def show():
     st.title("Dashboard")
     
-    col1, col2, col3 = st.columns([1,6,1])
+    col1, col2, col3 = st.columns([6, 1, 1])
     with col3:
         if st.button("👤"):
             st.session_state['show_profile'] = True
@@ -42,7 +42,7 @@ def show():
                 text-align: center;
                 cursor: pointer;
                 transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-                height: 150px;
+                height: 100px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -59,7 +59,7 @@ def show():
                 text-align: center;
                 cursor: pointer;
                 transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-                height: 150px;
+                height: 100px;
                 display: flex;
                 align-items: center;
                 justify-content: center;
@@ -89,11 +89,3 @@ def show():
                 st.session_state['show_grocery'] = True
                 st.session_state['grocery_type'] = 'vegetable'
                 st.rerun()
-    
-    if st.sidebar.button("Logout"):
-        del st.session_state['user']
-        if 'show_profile' in st.session_state:
-            del st.session_state['show_profile']
-        if 'show_grocery' in st.session_state:
-            del st.session_state['show_grocery']
-        st.rerun()

@@ -69,11 +69,16 @@ grocery_item_style = """
     }}
 </style>
 """
+
 search_bar_style = """
 <style>
     .stTextInput > div > div > input {
         font-size: 20px;
         padding: 10px 15px;
+    }
+    .stSelectbox > div > div > div {
+        font-size: 18px;
+        padding: 5px 10px;
     }
 </style>
 """
@@ -81,7 +86,8 @@ search_bar_style = """
 
 grocery_item_style = """
 <style>
-    .grocery-item {
+
+.grocery-item {
         border: 1px solid #ddd;
         border-radius: 10px;
         padding: 20px;
@@ -114,6 +120,9 @@ grocery_item_style = """
         margin: 5px 0;
         font-size: 14px;
     }
+
+
+
     .modal {
         display: none;
         position: fixed;
@@ -164,4 +173,51 @@ window.onclick = function(event) {
     }
 }
 </script>
+"""
+
+# styles.py
+
+add_new_button_style = """
+<style>
+    /* Style for the Add New Grocery expander */
+    .add-new-expander {
+        background-color: #4CAF50 !important;
+        border: none !important;
+        border-radius: 12px !important;
+        color: white !important;
+        padding: 10px 20px !important;
+        text-align: center !important;
+        text-decoration: none !important;
+        font-size: 20px !important;
+        margin: 10px 0 !important;
+        cursor: pointer !important;
+        transition: all 0.3s !important;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.2) !important;
+    }
+
+    .add-new-expander:hover {
+        background-color: #45a049 !important;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3) !important;
+    }
+
+    /* Style for the expander content */
+    .add-new-expander .streamlit-expanderContent {
+        background-color: white !important;
+        border: 1px solid #4CAF50 !important;
+        border-top: none !important;
+        border-radius: 0 0 12px 12px !important;
+    }
+
+    /* Style for the expander header */
+    .add-new-expander .streamlit-expanderHeader {
+        color: white !important;
+        background-color: transparent !important;
+        font-weight: bold !important;
+    }
+
+    /* Style for the expander icon */
+    .add-new-expander .streamlit-expanderHeader svg {
+        fill: white !important;
+    }
+</style>
 """

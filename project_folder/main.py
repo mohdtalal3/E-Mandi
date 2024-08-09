@@ -7,12 +7,12 @@ def main():
     st.set_page_config(page_title="Agri-App", layout="wide")
 
     if 'user' not in st.session_state:
-        st.sidebar.title("Welcome")
-        page = st.sidebar.selectbox("Choose an option", ["Login", "Sign Up"])
+        if 'page' not in st.session_state:
+            st.session_state['page'] = 'login'
 
-        if page == "Login":
+        if st.session_state['page'] == 'login':
             login.show()
-        elif page == "Sign Up":
+        elif st.session_state['page'] == 'signup':
             signup.show()
     else:
         dashboard.show()

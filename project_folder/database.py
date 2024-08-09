@@ -12,7 +12,8 @@ def init_db():
                   district TEXT NOT NULL,
                   tehsil TEXT NOT NULL,
                   phone TEXT NOT NULL,
-                  picture BLOB)''')
+                  picture BLOB,
+                  user_type TEXT)''')
     conn.commit()
     conn.close()
 
