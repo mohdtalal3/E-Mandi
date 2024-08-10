@@ -55,13 +55,13 @@ def get_groceries(type, season=None, search=None):
     conn.close()
     return groceries
 
-def add_daily_entry(user_id, grocery_id, subtype, quality, price, video, image, date):
+def add_daily_entry(user_id, grocery_id, subtype, quality, price, video, image, date,type1):
     conn = sqlite3.connect('users.db')
     c = conn.cursor()
     c.execute("""INSERT INTO daily_entries 
-                 (user_id, grocery_id, subtype, quality, price, video, image, date) 
-                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)""",
-              (user_id, grocery_id, subtype, quality, price, video, image, date))
+                 (user_id, grocery_id, subtype, quality, price, video, image, date,type) 
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?,?)""",
+              (user_id, grocery_id, subtype, quality, price, video, image, date,type1))
     conn.commit()
     conn.close()
 
