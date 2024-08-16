@@ -140,7 +140,7 @@ def show(grocery_type):
             with daily_entry_expander:
                 with st.form(f"daily_entry_{grocery[0]}", clear_on_submit=True, border=True):
                     subtype = st.text_input("Subtype (e.g., type of grape)")
-                    quality = st.selectbox("Quality", ["A", "B", "C"])
+                    quality = st.selectbox("Quality", ["High", "Low", "Medium"])
                     type = st.selectbox("Type", ["Distributor","Mandi Wala"])
                     price = st.number_input("Price", min_value=0.0, step=0.1)
                     video = st.file_uploader("Upload Video", type=["mp4", "mov"])
